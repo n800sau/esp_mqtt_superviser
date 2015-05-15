@@ -11,6 +11,11 @@ BUILD_BASE	= build
 FW_BASE = firmware
 ESPTOOL = tools/esptool.py
 
+ifdef ROOT_USER_CONFIG_HEADER
+CFLAGS = -DROOT_USER_CONFIG_HEADER=$(ROOT_USER_CONFIG_HEADER)
+else
+CFLAGS = -DROOT_USER_CONFIG_HEADER=0
+endif
 
 # name for the target project
 TARGET		= app
@@ -104,7 +109,7 @@ EXTRA_INCDIR    = include $(SDK_BASE)/../include
 LIBS		= c gcc hal phy pp net80211 lwip wpa main ssl
 
 # compiler flags using during compilation of source files
-CFLAGS		= -Os -Wpointer-arith -Wundef -Werror -Wl,-EL -fno-inline-functions -nostdlib -mlongcalls -mtext-section-literals  -D__ets__ -DICACHE_FLASH
+CFLAGS	+= -Os -Wpointer-arith -Wundef -Werror -Wl,-EL -fno-inline-functions -nostdlib -mlongcalls -mtext-section-literals  -D__ets__ -DICACHE_FLASH
 
 # linker flags used to generate the main object file
 LDFLAGS		= -nostdlib -Wl,--no-check-sections -u call_user_start -Wl,-static
